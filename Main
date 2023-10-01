@@ -1,9 +1,10 @@
-import urllib.parse
-import requests
+import urllib.parse #parsing data from JSON url
+import requests #retrieve data from JSON url
 
 main_api = "https://www.mapquestapi.com/directions/v2/route?"
 key = "M0cZPmHSYjMCo2tbakH0NBdL2XyjGTTc"
 
+#Quit Functionality. stops the program
 while True:
     orig = input("Starting Location: ")
     if orig == "quit" or orig =="q":
@@ -21,16 +22,15 @@ while True:
 
     if json_status == 0:
         print("API Status: " + str(json_status) + " = A successful route call.\n")
+        
         print("=============================================") 
-        print("Have toll road? " + str(json_data["route"]["hasTollRoad"]))
+        print("Have toll road? " + str(json_data["route"]["hasTollRoad"])) 
         print("Directions from " + (orig) + " to " + (dest)) 
         print("Trip Duration: " + (json_data["route"]["formattedTime"])) 
         print("Kilometers: " + str("{:.2f}".format((json_data["route"]["distance"])*1.61)))
-
         print("=============================================")
         for each in json_data["route"]["legs"][0]["maneuvers"]:
-            print((each["narrative"]) + " " + (each["formattedTime"]) + " (" + str("{:.2f}".format((each["distance"])*1.61) + " km)"))
-            
+            print((each["narrative"]) + " " + (each["formattedTime"]) + " (" + str("{:.2f}".format((each["distance"])*1.61) + " km)"))    
         print("=============================================\n")
 
     elif json_status == 402: 
