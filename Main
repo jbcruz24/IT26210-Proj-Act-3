@@ -17,7 +17,11 @@ while True:
     if route == "quit" or route == "q":
         break
 
-    url = main_api + urllib.parse.urlencode({"key":key, "from":orig, "to":dest, "routeType":route})
+    mode = input("Transport Mode (WALKING | BICYCLE): ")
+    if mode == "quit" or mode == "q":
+        break
+
+    url = main_api + urllib.parse.urlencode({"key":key, "from":orig, "to":dest, "routeType":route, "transportMode":mode})
     print("URL", (url))
 
     json_data = requests.get(url).json()
@@ -29,6 +33,7 @@ while True:
         print("Have toll road? " + str(json_data["route"]["hasTollRoad"]))
         print("Directions from " + (orig) + " to " + (dest))
         print("Route Type: " + (route)) 
+        print("Transport Mode: " + (mode))
         print("Trip Duration: " + (json_data["route"]["formattedTime"])) 
         print("Kilometers: " + str("{:.2f}".format((json_data["route"]["distance"])*1.61)))
 
